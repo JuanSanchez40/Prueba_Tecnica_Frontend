@@ -1,0 +1,1 @@
+// PostCSS configuration removed since we're using pure CSS
