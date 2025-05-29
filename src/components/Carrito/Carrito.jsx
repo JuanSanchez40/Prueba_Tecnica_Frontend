@@ -12,10 +12,13 @@ import './carrito.css';
  */
 export const Carrito = () => {
   const items = useSelector(state => state.carrito.items);
+  const user = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
   const { setNodeRef } = useDroppable({
     id: 'cart-droppable',
   });
+
+  if (!user) return null;
 
   const cartClass = items.length === 0 ? 'cart cart--empty' : 'cart';
 
