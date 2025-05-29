@@ -5,14 +5,16 @@ import { PRODUCTOS_REQUEST, PRODUCTOS_SUCCESS, PRODUCTOS_FAILURE } from './actio
 export const fetchProductos = (search = '', page = 1) => async (dispatch) => {
   dispatch({ type: PRODUCTOS_REQUEST });
   try {
-    // Petición al endpoint real de productos
-    const response = await axios.get('https://fakestoreapi.com/products');
+    // Petición al endpoint local de json-server con paginación
+    const limit = 20;
+    const start = (page - 1) * limit;
+    const response = await axios.get(`http://localhost:3001/products?_limit=${limit}&_start=${start}`);
     dispatch({
       type: PRODUCTOS_SUCCESS,
       payload: {
         productos: response.data,
         page,
-        hasMore: false,
+        hasMore: response.data.length === limit,
       },
     });
   } catch (error) {
