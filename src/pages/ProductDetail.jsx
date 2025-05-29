@@ -8,7 +8,7 @@ import { Encabezado } from '../components/Encabezado/Encabezado';
 
 function ProductDetail() {
   const dispatch = useDispatch();
-  const { productId } = useParams();
+  const { id } = useParams();
   const productos = useSelector(state => state.productos.productos);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,13 +21,13 @@ function ProductDetail() {
 
   useEffect(() => {
     if (productos.length > 0) {
-      const found = productos.find(p => String(p.id) === String(productId));
+      const found = productos.find(p => String(p.id) === String(id));
       setProduct(found);
       setLoading(false);
     } else {
       setLoading(true);
     }
-  }, [productos, productId]);
+  }, [productos, id]);
 
   if (loading) return <div>Cargando...</div>;
   if (error || !product) return <div>{error || 'Producto no encontrado.'}</div>;

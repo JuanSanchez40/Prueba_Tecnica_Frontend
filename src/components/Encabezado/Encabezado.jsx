@@ -6,6 +6,9 @@ import Button from '@mui/material/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { clearCart } from '../../store/carritoSlice';
 import logoLiverpool from '../../assets/images/Liverpool_logo.svg.png';
+import Avatar from '@mui/material/Avatar';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
 import './Encabezado.css';
 
 /**
@@ -13,7 +16,12 @@ import './Encabezado.css';
  */
 export const Encabezado = ({ onReset }) => {
   const cartItems = useSelector(state => state.carrito.items);
+  const user = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    signOut(auth);
+  };
 
   return (
     <header className="header">

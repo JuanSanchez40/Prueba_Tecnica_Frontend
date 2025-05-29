@@ -13,7 +13,7 @@ export const TarjetaProducto = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleImageClick = () => {
-    navigate(`/${product.id}`);
+    navigate(`/producto/${product.id}`);
   };
 
   const handleAddToCart = (e) => {
