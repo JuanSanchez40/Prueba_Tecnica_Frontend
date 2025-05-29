@@ -6,6 +6,7 @@ import Tienda from './pages/Tienda';
 import ProductDetail from './pages/ProductDetail';
 import { Encabezado } from './components/Encabezado/Encabezado';
 import { Carrito } from './components/Carrito/Carrito';
+import { useLocation } from 'react-router-dom';
 
 /**
  * Patrón Contenedor/Presentacional
@@ -18,10 +19,12 @@ function PrivateRoute({ children }) {
 }
 
 function App() {
+  const location = useLocation();
+  const hideCart = location.pathname === '/' || location.pathname === '/home';
   return (
     <>
       <Encabezado />
-      <Carrito />
+      {!hideCart && <Carrito />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />

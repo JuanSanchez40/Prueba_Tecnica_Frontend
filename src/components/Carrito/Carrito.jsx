@@ -20,6 +20,7 @@ export const Carrito = () => {
 
   if (!user) return null;
 
+  const totalUnidades = items.reduce((sum, item) => sum + item.cantidad, 0);
   const cartClass = items.length === 0 ? 'cart cart--empty' : 'cart';
 
   return (
@@ -30,7 +31,7 @@ export const Carrito = () => {
           <span>Carrito de Compras</span>
         </div>
         <span className="cart-badge">
-          {items.length} productos
+          {totalUnidades} {totalUnidades === 1 ? 'unidad' : 'unidades'}
         </span>
       </div>
       
@@ -44,7 +45,7 @@ export const Carrito = () => {
             />
             <div className="cart-item-details">
               <p className="cart-item-title">{item.title}</p>
-              <p className="cart-item-price">${item.price.toFixed(2)}</p>
+              <p className="cart-item-price">${item.price.toFixed(2)} <span style={{fontWeight:600, color:'#1976d2'}}>x{item.cantidad}</span></p>
             </div>
             <IconButton
               onClick={() => dispatch(removeItem(item.id))}
@@ -60,7 +61,7 @@ export const Carrito = () => {
       
       {items.length > 0 && (
         <div className="cart-total">
-          Total: ${items.reduce((sum, item) => sum + item.price, 0).toFixed(2)}
+          Total: ${items.reduce((sum, item) => sum + item.price * item.cantidad, 0).toFixed(2)}
         </div>
       )}
     </div>
