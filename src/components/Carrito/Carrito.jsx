@@ -17,8 +17,10 @@ export const Carrito = () => {
     id: 'cart-droppable',
   });
 
+  const cartClass = items.length === 0 ? 'cart cart--empty' : 'cart';
+
   return (
-    <div ref={setNodeRef} className="cart">
+    <div ref={setNodeRef} className={cartClass}>
       <div className="cart-header">
         <div className="cart-title">
           <ShoppingCartIcon sx={{ fontSize: 20 }} />

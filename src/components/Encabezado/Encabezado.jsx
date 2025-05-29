@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import Button from '@mui/material/Button';
@@ -18,11 +19,15 @@ export const Encabezado = ({ onReset }) => {
     <header className="header">
       <div className="container header-content">
         <div className="header-logo">
-          <img 
-            src={logoLiverpool}
-            alt="Logo Liverpool"
-            className="logo-image"
-          />
+          <Link to="/tienda" style={{ display: 'inline-block' }}>
+            <img 
+              src={logoLiverpool}
+              alt="Logo Liverpool"
+              className="logo-image"
+              style={{ cursor: 'pointer' }}
+              onClick={() => { window.location.href = '/tienda'; }}
+            />
+          </Link>
           <h1 className="header-title">e-Commerce</h1>
         </div>
         

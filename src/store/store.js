@@ -1,8 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import carritoReducer from './carritoSlice';
+import rootReducer from '../redux/reducer';
 
 export const store = configureStore({
-  reducer: {
-    carrito: carritoReducer,
-  },
+  reducer: rootReducer,
 });
