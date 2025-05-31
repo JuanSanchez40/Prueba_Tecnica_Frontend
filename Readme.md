@@ -7,7 +7,7 @@ npm install
 
 #Iniciar json-server en la raiz del proyecto con el siguiente comando:
 
-json-server --watch db.json --port 3001
+npx json-server --watch db.json --port 3001
 
 
 #Abrir otra terminal en la raiz del proyecto y correr el siguiente comando para iniciar el proyecto
