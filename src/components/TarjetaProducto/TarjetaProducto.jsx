@@ -1,14 +1,23 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeItem } from '../../store/carritoSlice';
 
 import { Card, CardMedia, CardContent, Typography } from '@mui/material';
-import { useDispatch } from 'react-redux';
 import { addItem } from '../../store/carritoSlice';
 import { useNavigate } from 'react-router-dom';
 
 /**
  * Patrón Presentacional Componente de Presentación
  */
+import { useEffect, useState } from 'react';
 export const TarjetaProducto = ({ product }) => {
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 1084 : false);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 1084);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  const cantidad = useSelector(state => state.carrito.items.find(i => i.id === product.id)?.cantidad || 0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -63,9 +72,31 @@ export const TarjetaProducto = ({ product }) => {
         }}>
           {product.description}
         </Typography>
-        <Typography variant="h6" color="primary">
-          ${product.price.toFixed(2)}
-        </Typography>
+        <Typography variant="h6" color="primary" sx={{display:'flex',alignItems:'center',gap:1}}>
+           ${product.price.toFixed(2)}
+           {isMobile && cantidad > 0 && (
+             <span
+               onClick={e => {
+                 e.stopPropagation();
+                 dispatch(removeItem(product.id));
+               }}
+               style={{
+                 background: '#1976d2',
+                 color: '#fff',
+                 borderRadius: '50%',
+                 padding: '2px 8px',
+                 fontSize: 15,
+                 marginLeft: 8,
+                 fontWeight: 600,
+                 cursor: 'pointer',
+                 userSelect: 'none'
+               }}
+               title="Quitar una unidad"
+             >
+               x{cantidad}
+             </span>
+           )}
+         </Typography>
       </CardContent>
       <div style={{ width: '100%', padding: '0 16px 16px 16px', boxSizing: 'border-box', display: 'flex', justifyContent: 'flex-end' }}>
         <button

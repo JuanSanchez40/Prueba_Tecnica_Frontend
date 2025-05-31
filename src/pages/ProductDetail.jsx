@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, clearCart } from '../store/carritoSlice';
+import { addItem, clearCart, removeItem } from '../store/carritoSlice';
 
 import './ProductDetail.css';
 import { Encabezado } from '../components/Encabezado/Encabezado';
 
 function ProductDetail() {
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 1084 : false);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 1084);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   const dispatch = useDispatch();
   const { id } = useParams();
+  const cantidad = useSelector(state => state.carrito.items.find(i => String(i.id) === String(id))?.cantidad || 0);
   const productos = useSelector(state => state.productos.productos);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -49,7 +56,30 @@ function ProductDetail() {
           <div className="product-detail-info">
             <h2 className="product-detail-title">{product.title}</h2>
             <p className="product-detail-description">{product.description}</p>
-            <div className="product-detail-price">Precio: <b>${product.price}</b></div>
+            <div className="product-detail-price" style={{display:'flex',alignItems:'center',gap:8}}>
+              Precio: <b>${product.price}</b>
+              {isMobile && cantidad > 0 && (
+                <span
+                  onClick={e => {
+                    e.stopPropagation();
+                    dispatch(removeItem(product.id));
+                  }}
+                  style={{
+                    background: '#1976d2',
+                    color: '#fff',
+                    borderRadius: '50%',
+                    padding: '2px 8px',
+                    fontSize: 15,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    userSelect: 'none'
+                  }}
+                  title="Quitar una unidad"
+                >
+                  x{cantidad}
+                </span>
+              )}
+            </div>
             <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
               <button className="btn-back" onClick={handleBack}>Regresar</button>
               <button className="btn-add-cart" onClick={handleAddToCart}>Agregar al carrito</button>

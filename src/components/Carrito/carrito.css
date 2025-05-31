@@ -25,6 +25,12 @@
 }
 
 
+@media (max-width: 1084px) {
+  .cart {
+    display: none !important;
+  }
+}
+
 @media (max-width: 600px) {
   .cart {
     width: 90vw;

@@ -12,6 +12,7 @@ import Divider from '@mui/material/Divider';
 
 import './Home.css';
 import { Encabezado } from '../components/Encabezado/Encabezado';
+import SlideMenu from '../components/SlideMenu';
 
 
 function Home() {
@@ -70,6 +71,7 @@ function Home() {
   return (
     <>
       <Encabezado onReset={handleReset} />
+      <SlideMenu />
       <div className="home-container">
         <h1>Bienvenido a la Tienda</h1>
         <p>Descubre los mejores productos al mejor precio.</p>
