@@ -35,6 +35,7 @@ export const Encabezado = ({ onReset }) => {
     signOut(auth);
     dispatch(clearCart());
     localStorage.removeItem('justLoggedIn'); // Limpia el flag al cerrar sesión
+    navigate('/');
   };
 
   return (

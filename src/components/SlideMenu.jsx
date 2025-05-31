@@ -27,6 +27,7 @@ const SlideMenu = () => {
     signOut(auth);
     dispatch(clearCart());
     localStorage.removeItem('justLoggedIn');
+    window.location.href = '/';
   };
 
   if (!user) return null;

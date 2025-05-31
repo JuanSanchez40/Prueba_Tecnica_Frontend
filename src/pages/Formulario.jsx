@@ -43,8 +43,19 @@ const Formulario = () => {
     e.preventDefault();
     const errors = {};
     fields.forEach(f => {
-      if (f.mandatory && !formValues[f.identifier]) {
-        errors[f.identifier] = `El campo "${f.fiendlyName}" es obligatorio, favor de ingresar su "${f.fiendlyName}".`;
+      const value = formValues[f.identifier] || '';
+      if (f.mandatory) {
+        if (!value.trimStart()) {
+          errors[f.identifier] = `El campo "${f.fiendlyName}" es obligatorio, favor de ingresar su "${f.fiendlyName}".`;
+        } else if (value.length !== value.trimStart().length) {
+          errors[f.identifier] = `El campo "${f.fiendlyName}" no puede iniciar con espacios en blanco.`;
+        }
+      }
+      // Validación específica para el campo edad
+      if (f.identifier.toLowerCase() === 'age' && value) {
+        if (!/^\d+$/.test(value.trim())) {
+          errors[f.identifier] = 'La edad solo puede contener números.';
+        }
       }
     });
     setFormErrors(errors);
